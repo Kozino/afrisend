@@ -391,6 +391,24 @@ nav {
   color: rgba(255,255,255,0.4);
 }
 
+  #googleplay-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  min-width: unset;
+  border-radius: 0;
+}
+
+#googleplay-btn:hover {
+  background: none;
+  border-color: transparent;
+  transform: translateY(-3px); /* keep the subtle lift if you like, or remove */
+}
+
+/* Hide the text label since it's image-only now */
+#googleplay-btn .store-text {
+  display: none;
+}
   /* ─── FOOTER ─── */
   footer {
     background: var(--dark); padding: 60px 6vw 32px;
@@ -978,26 +996,19 @@ nav {
     <div class="section-title">Your family is<br>one tap away</div>
     <p class="section-sub">AfriSend is available on iOS and Android. Download now and make your first transfer — it takes less than 3 minutes to get started.</p>
    <div class="store-buttons">
-  <a href="#" class="store-btn" id="appstore-btn">
-    <img src="app-store.svg" alt="Download on the App Store">
-    <div class="store-text">
-      <div class="store-text-label">Download on the</div>
-      <div class="store-name">App Store</div>
-    </div>
-  </a>
+ 
+   <a href="#" id="googleplay-btn">
+  <img src="app-store.svg" alt="Download on the App Store" style="height: 40px; width: auto;">
+</a>
   
       <!--  <div>
           <div class="store-text-label">Download on the</div>
           <div class="store-name">App Store</div>
         </div> -->
-      </a>
-      <a href="#" class="store-btn" id="googleplay-btn">
-    <img src="playstore.svg" alt="Get it on Google Play">
-    <div class="store-text">
-      <div class="store-text-label">Get it on</div>
-      <div class="store-name">Google Play</div>
-    </div>
-  </a>
+    
+     <a href="#" id="googleplay-btn">
+  <img src="playstore.svg" alt="Get it on Google Play" style="height: 40px; width: auto;">
+</a>
 </div>
      <!--   <div>
           <div class="store-text-label">Get it on</div>
