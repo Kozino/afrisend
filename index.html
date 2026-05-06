@@ -187,10 +187,11 @@ nav {
   /* Hero visual side */
   .hero-visual { position: relative; z-index: 2; display: flex; justify-content: center; align-items: center; }
   .hand-phone-wrap {
-    position: relative;
-    animation: floatPhone 4s ease-in-out infinite;
-    filter: drop-shadow(0 40px 80px rgba(0,0,0,0.55)) drop-shadow(0 0 40px rgba(76,175,80,0.18));
-  }
+  position: relative;
+  animation: floatPhone 4s ease-in-out infinite;
+  filter: drop-shadow(0 40px 80px rgba(0,0,0,0.55)) drop-shadow(0 0 40px rgba(76,175,80,0.18));
+  max-width: 100%;  /* ADD THIS */
+}
   @keyframes floatPhone { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
   .hand-phone-wrap img.app-screen {
     width: 260px;
@@ -207,6 +208,7 @@ nav {
     border: 1px solid rgba(76,175,80,0.35); border-radius: 14px;
     padding: 12px 16px; font-size: 0.78rem;
     box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    display: none; 
   }
   .float-card-1 { left: -110px; top: 100px; width: 140px; animation: floatCard1 5s ease-in-out infinite; }
   .float-card-2 { right: -100px; bottom: 140px; width: 130px; animation: floatCard2 4.5s ease-in-out infinite; }
@@ -383,7 +385,11 @@ nav {
   /* ─── RESPONSIVE ─── */
   @media (max-width: 900px) {
     .hero { grid-template-columns: 1fr; padding: 100px 6vw 60px; }
-    .hero-visual { display: none; }
+    .hero-visual { 
+    display: flex;          /* show it instead of hiding */
+    margin-top: 40px;
+    justify-content: center;
+  }
     .steps-grid { grid-template-columns: 1fr 1fr; }
     .features-layout { grid-template-columns: 1fr; }
     .testimonials-grid { grid-template-columns: 1fr; }
@@ -501,7 +507,7 @@ nav {
 
 <div class="hero-visual">
   <div class="hand-phone-wrap">
-    <svg viewBox="0 0 393 852" xmlns="http://www.w3.org/2000/svg" style="width:300px;height:650px;">
+    <svg viewBox="0 0 393 852" xmlns="http://www.w3.org/2000/svg" style="width:min(280px, 72vw);height:auto;display:block;">
       <defs>
         <clipPath id="screenClip">
           <rect x="16" y="12" width="361" height="828" rx="10"/>
