@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AfriSend – Connecting Family Across Borders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #0d3b2e;
+    --emerald: #1a6b45;
+    --lime: #4caf50;
+    --bright: #7ed321;
+    --navy: #1a2340;
+    --dark: #0a1628;
+    --cream: #f8f5ef;
+    --white: #ffffff;
+    --gold: #f5c842;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 6vw;
+    background: rgb(243, 245, 247);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(76, 175, 80, 0.15);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; }
+  .nav-logo img { height: 42px; width: 42px; object-fit: contain; }
+  .nav-brand { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.35rem; color: #08101b; }
+  .nav-brand span { color: var(--lime); }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a { color: rgba(2, 34, 15, 0.72); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--lime); }
+  .nav-cta {
+    background: var(--lime); color: var(--forest);
+    padding: 10px 24px; border-radius: 50px;
+    font-weight: 700; font-size: 0.88rem; text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(76,175,80,0.35);
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(76,175,80,0.5); color: var(--forest); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 6vw 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 80% at 70% 40%, rgba(26,107,69,0.25) 0%, transparent 65%),
+                radial-gradient(ellipse 50% 50% at 20% 80%, rgba(76,175,80,0.12) 0%, transparent 60%),
+                linear-gradient(135deg, #0a1628 0%, #0d3b2e 50%, #0a1628 100%);
+  }
+  .hero-grid-lines {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: linear-gradient(var(--lime) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--lime) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(76,175,80,0.15); border: 1px solid rgba(76,175,80,0.35);
+    padding: 6px 16px; border-radius: 50px;
+    font-size: 0.78rem; font-weight: 600; color: var(--lime);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeUp 0.7s ease both;
+  }
+  .hero-tag::before { content: '●'; font-size: 0.5em; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 5vw, 4.2rem);
+    line-height: 1.1; font-weight: 900;
+    margin-bottom: 24px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero h1 em { font-style: normal; color: var(--lime); }
+  .hero p {
+    font-size: 1.05rem; color: rgba(255,255,255,0.68); line-height: 1.75;
+    max-width: 460px; margin-bottom: 44px;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--lime), var(--bright));
+    color: var(--forest); padding: 16px 36px; border-radius: 50px;
+    font-weight: 700; font-size: 1rem; text-decoration: none;
+    box-shadow: 0 8px 32px rgba(76,175,80,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(76,175,80,0.55); }
+  .btn-ghost {
+    border: 1.5px solid rgba(255,255,255,0.25); color: var(--white);
+    padding: 16px 36px; border-radius: 50px;
+    font-weight: 600; font-size: 1rem; text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--lime); background: rgba(76,175,80,0.08); color: var(--white); }
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 56px;
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+  .stat-item { }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--lime); }
+  .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+  /* Hero visual side */
+  .hero-visual { position: relative; z-index: 2; display: flex; justify-content: center; align-items: center; }
+  .hand-phone-wrap {
+    position: relative;
+    animation: floatPhone 4s ease-in-out infinite;
+    filter: drop-shadow(0 40px 80px rgba(0,0,0,0.55)) drop-shadow(0 0 40px rgba(76,175,80,0.18));
+  }
+  @keyframes floatPhone { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+  .hand-phone-wrap img.app-screen {
+    width: 260px;
+    border-radius: 36px;
+    display: block;
+    position: relative;
+    z-index: 2;
+    border: 2.5px solid rgba(76,175,80,0.35);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.45), 0 0 0 6px rgba(13,59,46,0.5);
+  }
+  /* Floating elements around phone */
+  .float-card {
+    position: absolute; background: rgba(13,59,46,0.97);
+    border: 1px solid rgba(76,175,80,0.35); border-radius: 14px;
+    padding: 12px 16px; font-size: 0.78rem;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+  .float-card-1 { left: -110px; top: 100px; width: 140px; animation: floatCard1 5s ease-in-out infinite; }
+  .float-card-2 { right: -100px; bottom: 140px; width: 130px; animation: floatCard2 4.5s ease-in-out infinite; }
+  @keyframes floatCard1 { 0%,100%{transform:translateY(0) rotate(-2deg)} 50%{transform:translateY(-8px) rotate(-2deg)} }
+  @keyframes floatCard2 { 0%,100%{transform:translateY(0) rotate(2deg)} 50%{transform:translateY(8px) rotate(2deg)} }
+  .float-label { font-size: 0.62rem; color: rgba(255,255,255,0.5); margin-bottom: 3px; }
+  .float-value { font-weight: 700; color: var(--lime); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ─── HOW IT WORKS ─── */
+  .section { padding: 100px 6vw; }
+  .section-alt { background: rgba(255,255,255,0.02); }
+  .section-label {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--lime); margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900; line-height: 1.15; margin-bottom: 16px;
+  }
+  .section-sub { color: rgba(255,255,255,0.6); font-size: 1rem; line-height: 1.7; max-width: 520px; }
+
+  .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 64px; }
+  .step-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(76,175,80,0.15);
+    border-radius: 20px; padding: 32px 24px;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .step-card:hover { border-color: rgba(76,175,80,0.45); transform: translateY(-4px); }
+  .step-card::before {
+    content: attr(data-num);
+    position: absolute; top: -20px; right: 16px;
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem; font-weight: 900;
+    color: rgba(76,175,80,0.07); line-height: 1;
+  }
+  .step-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(76,175,80,0.2), rgba(26,107,69,0.3));
+    border: 1px solid rgba(76,175,80,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 20px;
+  }
+  .step-title { font-weight: 700; font-size: 1rem; margin-bottom: 10px; }
+  .step-desc { font-size: 0.87rem; color: rgba(255,255,255,0.55); line-height: 1.65; }
+
+  /* ─── FEATURES ─── */
+  .features-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .feat-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(76,175,80,0.15);
+    border-radius: 18px; padding: 24px;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .feat-card:hover { border-color: rgba(76,175,80,0.4); background: rgba(76,175,80,0.06); }
+  .feat-icon { font-size: 1.6rem; margin-bottom: 12px; }
+  .feat-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; }
+  .feat-desc { font-size: 0.83rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+  /* ─── RATES ─── */
+  .rates-table {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(76,175,80,0.2);
+    border-radius: 24px; overflow: hidden; margin-top: 48px;
+  }
+  .rates-head {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    padding: 16px 28px; background: rgba(76,175,80,0.1);
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--lime);
+  }
+  .rates-row {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    padding: 20px 28px; border-top: 1px solid rgba(255,255,255,0.05);
+    align-items: center; transition: background 0.2s;
+  }
+  .rates-row:hover { background: rgba(76,175,80,0.05); }
+  .country-flag { font-size: 1.2rem; margin-right: 10px; }
+  .country-name { font-weight: 600; font-size: 0.95rem; }
+  .rate-value { font-size: 0.9rem; color: rgba(255,255,255,0.8); }
+  .rate-fee { font-size: 0.9rem; }
+  .rate-fee.low { color: var(--lime); font-weight: 600; }
+  .rate-speed { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+  .rate-badge {
+    display: inline-block; background: rgba(76,175,80,0.2); color: var(--lime);
+    padding: 2px 10px; border-radius: 50px; font-size: 0.72rem; font-weight: 600;
+  }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
+  .testi-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(76,175,80,0.15);
+    border-radius: 20px; padding: 28px;
+    transition: border-color 0.3s;
+  }
+  .testi-card:hover { border-color: rgba(76,175,80,0.35); }
+  .testi-stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 14px; }
+  .testi-text { font-size: 0.9rem; color: rgba(255,255,255,0.72); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--lime), var(--emerald));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: var(--forest); font-size: 0.85rem;
+  }
+  .testi-name { font-weight: 700; font-size: 0.9rem; }
+  .testi-origin { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+
+  /* ─── DOWNLOAD ─── */
+  .download-section {
+    padding: 100px 6vw;
+    background: linear-gradient(135deg, rgba(13,59,46,0.8) 0%, rgba(10,22,40,0.9) 100%);
+    position: relative; overflow: hidden;
+  }
+  .download-bg {
+    position: absolute; inset: 0; opacity: 0.06;
+    background-image: radial-gradient(circle, var(--lime) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .download-inner { position: relative; z-index: 2; text-align: center; max-width: 680px; margin: 0 auto; }
+  .download-inner .section-label { justify-content: center; display: flex; }
+  .download-inner .section-title { margin-bottom: 16px; }
+  .download-inner .section-sub { margin: 0 auto 48px; text-align: center; }
+  .store-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  .store-btn {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.2);
+    border-radius: 16px; padding: 14px 28px;
+    text-decoration: none; color: var(--white);
+    transition: background 0.25s, border-color 0.25s, transform 0.25s;
+    min-width: 200px;
+  }
+  .store-btn:hover { background: rgba(76,175,80,0.2); border-color: var(--lime); transform: translateY(-3px); color: var(--white); }
+  .store-icon { font-size: 2rem; }
+  .store-text-label { font-size: 0.68rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.06em; }
+  .store-name { font-size: 1.1rem; font-weight: 700; }
+  .store-soon {
+    margin-top: 20px; font-size: 0.82rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark); padding: 60px 6vw 32px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand { }
+  .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .footer-logo img { height: 38px; }
+  .footer-tagline { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 260px; }
+  .footer-socials { display: flex; gap: 12px; margin-top: 20px; }
+  .social-link {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; font-size: 0.85rem;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .social-link:hover { background: rgba(76,175,80,0.2); border-color: var(--lime); }
+  .footer-col h4 { font-weight: 700; font-size: 0.9rem; margin-bottom: 18px; color: var(--white); }
+  .footer-col a { display: block; color: rgba(255,255,255,0.5); font-size: 0.85rem; text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--lime); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.8rem; color: rgba(255,255,255,0.35);
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom span { color: var(--lime); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 100px 6vw 60px; }
+    .hero-visual { display: none; }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .features-layout { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .rates-head, .rates-row { grid-template-columns: 2fr 1fr 1fr; }
+    .rates-head > *:last-child, .rates-row > *:last-child { display: none; }
+  }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+  }
+
+  .features-section {
+  background-color: #ffffff; /* soft off-white */
+}
+
+.section-titlea {
+  color: #16a34a;
+  font-weight: 900;
+  font-size: clamp(22px, 3vw, 46px);
+}
+
+.feat-titlea {
+  color: #ffffff;
+  font-weight: 400;
+  font-size: clamp(18px, 1vw, 32px);
+}
+
+.section-labela {
+  color: #16a34a;
+  font-weight: 900;
+  font-size: clamp(32px, 5vw, 56px);
+}
+
+.section-suba,
+.feat-desca {
+  color: #0f172a; /* dark blue/near-black for readability */
+}
+
+.feat-carda {
+  background: #0a7521;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feat-carda:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(247, 246, 246, 0.08);
+}
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.hand-phone-wrap svg {
+  max-width: 100%;
+}
+
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="logo.png" alt="AfriSend Logo">
+    <span class="nav-brand">Afri<span>send</span></span>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="#how" onclick="closeMenu()">How It Works</a>
+    <a href="#features" onclick="closeMenu()">Features</a>
+    <a href="#rates" onclick="closeMenu()">Rates</a>
+    <a href="#download" onclick="closeMenu()">Download</a>
+    <a href="#download" class="nav-cta" onclick="closeMenu()">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">🇶🇦 Launching in Doha, Qatar</div>
+    <h1>
+      Connecting <em>Family</em><br>Across Borders
+    </h1>
+    <p>
+      Send money home to Africa in minutes — not days. AfriSend is built by Africans in Qatar, for Africans in Qatar. Low fees, live exchange rates, and total peace of mind.
+    </p>
+    <div class="hero-actions">
+      <a href="#download" class="btn-primary">Download the App</a>
+      <a href="#how" class="btn-ghost">See How It Works</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">30+</div>
+        <div class="stat-label">African Countries</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2 min</div>
+        <div class="stat-label">Avg. Transfer Time</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0.5%</div>
+        <div class="stat-label">Starting Fee</div>
+      </div>
+    </div>
+  </div>
+
+<div class="hero-visual">
+  <div class="hand-phone-wrap">
+    <svg viewBox="0 0 393 852" xmlns="http://www.w3.org/2000/svg" style="width:300px;height:650px;">
+      <defs>
+        <clipPath id="screenClip">
+          <rect x="16" y="12" width="361" height="828" rx="10"/>
+        </clipPath>
+        <filter id="phoneShadow">
+          <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#00000060"/>
+        </filter>
+      </defs>
+
+      <!-- PHONE BODY -->
+      <g filter="url(#phoneShadow)">
+        <rect x="0" y="0" width="393" height="852" rx="50" fill="#111"/>
+        <rect x="389" y="160" width="6" height="80" rx="3" fill="#222"/>
+        <rect x="389" y="260" width="6" height="120" rx="3" fill="#222"/>
+        <rect x="-2" y="160" width="6" height="60" rx="3" fill="#222"/>
+        <rect x="-2" y="240" width="6" height="100" rx="3" fill="#222"/>
+        <rect x="-2" y="360" width="6" height="100" rx="3" fill="#222"/>
+      </g>
+
+      <!-- PHONE SCREEN -->
+      <foreignObject x="16" y="12" width="361" height="828" clip-path="url(#screenClip)">
+        <div xmlns="http://www.w3.org/1999/xhtml" style="width:361px;height:828px;overflow:hidden;position:relative;background:#f0f2f5;">
+
+          <!-- Status bar -->
+          <div style="height:48px;background:#1a1a1a;display:flex;align-items:center;justify-content:space-between;padding:0 22px;">
+            <span style="color:#fff;font-size:13px;font-weight:500;">9:41</span>
+            <span style="color:#fff;font-size:12px;">●●●</span>
+          </div>
+
+          <!-- App header -->
+          <div style="background:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid #e8e8e8;">
+            <div style="display:flex;align-items:center;gap:9px;">
+               <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;margin:0 auto 4px;border:2px solid #e0c09a;">
+  <img src="avatar.jpg" alt="Amara" style="width:100%;height:100%;object-fit:cover;"/>
+</div>
+              <span style="font-size:17px;font-weight:600;color:#1a6b4a;">Welcome, Henry</span>
+            </div>
+            <div style="width:24px;height:24px;background:#1a6b4a;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+              <span style="color:#fff;font-size:13px;">&#128276;</span>
+            </div>
+          </div>
+
+          <!-- Balance card -->
+          <div style="background:#1a6b4a;margin:12px 12px 8px;border-radius:16px;padding:16px;">
+            <div style="color:#7ecfaa;font-size:12px;margin-bottom:5px;">Total Balance</div>
+            <div style="color:#fff;font-size:24px;font-weight:700;margin-bottom:12px;">12,450.00 QAR</div>
+            <div style="display:flex;gap:8px;">
+              <div style="background:#fff;border-radius:9px;padding:9px 12px;display:flex;align-items:center;gap:7px;flex:1;">
+                <div style="width:18px;height:18px;background:#1a6b4a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0;">+</div>
+                <span style="font-size:13px;font-weight:500;color:#1a1a1a;">Add Funds</span>
+              </div>
+              <div style="background:#e8820a;border-radius:9px;padding:9px 12px;display:flex;align-items:center;gap:7px;flex:1;">
+                <span style="font-size:13px;color:#fff;">&#8644;</span>
+                <span style="font-size:13px;font-weight:500;color:#fff;">Exchange</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Send money button -->
+          <div style="background:#1a5c3e;margin:0 12px 12px;border-radius:12px;padding:13px;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;">
+            <span style="color:#fff;font-size:14px;">&#9658;</span>
+            <span style="color:#fff;font-size:14px;font-weight:600;">Send Money</span>
+          </div>
+
+          <!-- Quick Send -->
+          <div style="padding:0 12px 10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;">
+              <span style="font-size:13px;font-weight:600;color:#1a1a1a;">Quick Send</span>
+              <span style="font-size:12px;color:#e8820a;">View All</span>
+            </div>
+            <div style="display:flex;gap:14px;">
+              <div style="text-align:center;">
+                <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;margin:0 auto 4px;border:2px solid #e0c09a;">
+  <img src="avatar1.jpg" alt="Amara" style="width:100%;height:100%;object-fit:cover;"/>
+</div>
+                <span style="font-size:11px;color:#444;">Amara</span>
+              </div>
+              
+              <div style="text-align:center;">
+                <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;margin:0 auto 4px;border:2px solid #e0c09a;">
+  <img src="avatar2.jpg" alt="Kofi" style="width:100%;height:100%;object-fit:cover;"/></div>
+                <span style="font-size:11px;color:#444;">Kofi</span>
+              </div>
+              <div style="text-align:center;">
+               <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;margin:0 auto 4px;border:2px solid #e0c09a;">
+  <img src="avatar3.jpg" alt="Olamide" style="width:100%;height:100%;object-fit:cover;"/></div>
+                <span style="font-size:11px;color:#444;">Olamide</span>
+              </div>
+              <div style="text-align:center;">
+                <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;margin:0 auto 4px;border:2px solid #e0c09a;">
+  <img src="avatar4.jpg" alt="Zainab" style="width:100%;height:100%;object-fit:cover;"/></div>
+                <span style="font-size:11px;color:#444;">Zainab</span>
+              </div>
+              <div style="text-align:center;">
+                <div style="width:44px;height:44px;border-radius:50%;background:transparent;border:2px dashed #bbb;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;">
+                  <span style="font-size:17px;color:#999;">+</span>
+                </div>
+                <span style="font-size:11px;color:#444;">New</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div style="padding:0 12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-size:13px;font-weight:600;color:#1a1a1a;">Recent Activity</span>
+              <span style="font-size:12px;color:#e8820a;">See More</span>
+            </div>
+
+            <div style="background:#fff;border-radius:10px;padding:10px 12px;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:9px;">
+                <div style="width:28px;height:28px;background:#e8f5ee;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#1a6b4a;">$</div>
+                <div>
+                  <div style="font-size:12px;font-weight:500;color:#1a1a1a;">Send to Amara</div>
+                  <div style="font-size:11px;color:#888;display:flex;align-items:center;gap:4px;"><span style="width:7px;height:7px;border-radius:50%;background:#f59e0b;display:inline-block;"></span>Pending · 2s ago</div>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:12px;font-weight:600;color:#1a1a1a;">-450.00 QAR</div>
+                <div style="font-size:10px;color:#888;">&#8776; 167,850 NGN</div>
+              </div>
+            </div>
+
+            <div style="background:#fff;border-radius:10px;padding:10px 12px;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:9px;">
+                <div style="width:28px;height:28px;background:#fff4e8;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#e8820a;">&#8943;</div>
+                <div>
+                  <div style="font-size:12px;font-weight:500;color:#1a1a1a;">Send to Kofi</div>
+                  <div style="font-size:11px;color:#888;display:flex;align-items:center;gap:4px;"><span style="width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block;"></span>Pending · 2h ago</div>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:12px;font-weight:600;color:#1a1a1a;">-1,200.00 QAR</div>
+                <div style="font-size:10px;color:#888;">&#8776; 38,400 GHS</div>
+              </div>
+            </div>
+
+            <div style="background:#fff;border-radius:10px;padding:10px 12px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:9px;">
+                <div style="width:28px;height:28px;background:#e8f5ee;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#1a6b4a;">B</div>
+                <div>
+                  <div style="font-size:12px;font-weight:500;color:#1a1a1a;">Top up via QNB</div>
+                  <div style="font-size:11px;color:#888;display:flex;align-items:center;gap:4px;"><span style="width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block;"></span>Completed · Yesterday</div>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:12px;font-weight:600;color:#22863a;">+2,000.00 QAR</div>
+              </div>
+            </div>
+
+
+             <div style="background:#fff;border-radius:10px;padding:10px 12px;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:9px;">
+                <div style="width:28px;height:28px;background:#e8f5ee;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#1a6b4a;">$</div>
+                <div>
+                  <div style="font-size:12px;font-weight:500;color:#1a1a1a;">Send to Mwangi</div>
+                  <div style="font-size:11px;color:#888;display:flex;align-items:center;gap:4px;"><span style="width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block;"></span>Completed · Yesterday</div>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:12px;font-weight:600;color:#1a1a1a;">-1,800.00 QAR</div>
+                <div style="font-size:10px;color:#888;">&#8776; 63,774 KSH</div>
+              </div>
+            </div>
+
+
+             <div style="background:#fff;border-radius:10px;padding:10px 12px;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:9px;">
+                <div style="width:28px;height:28px;background:#e8f5ee;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#1a6b4a;">$</div>
+                <div>
+                  <div style="font-size:12px;font-weight:500;color:#1a1a1a;">Send to Olamide</div>
+                  <div style="font-size:11px;color:#888;display:flex;align-items:center;gap:4px;"><span style="width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block;"></span>Completed · Friday, 1st May</div>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:12px;font-weight:600;color:#1a1a1a;">-3,500.00 QAR</div>
+                <div style="font-size:10px;color:#888;">&#8776; 1,305,500 NGN</div>
+              </div>
+            </div>
+
+
+
+
+            <!-- Rate Banner -->
+            <div style="background:#fff;border-radius:10px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:9px;">
+                <div style="width:28px;height:28px;background:#e8820a;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;">&#8593;</div>
+                <div>
+                  <div style="font-size:11px;color:#888;">Today's Rate</div>
+                  <div style="font-size:12px;font-weight:600;color:#1a1a1a;">1 QAR = 373.00 NGN</div>
+                </div>
+              </div>
+              <span style="font-size:15px;color:#bbb;">&#8250;</span>
+            </div>
+          </div>
+
+          
+          <!-- Bottom nav -->
+          <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:0.5px solid #e8e8e8;display:flex;justify-content:space-around;padding:10px 0 20px;">
+            <div style="text-align:center;">
+              <div style="font-size:18px;color:#1a6b4a;">&#8962;</div>
+              <div style="font-size:10px;color:#1a6b4a;font-weight:600;">Home</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:18px;color:#999;">&#10148;</div>
+              <div style="font-size:10px;color:#999;">Send</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:18px;color:#999;">&#128101;</div>
+              <div style="font-size:10px;color:#999;">Recipients</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="font-size:18px;color:#999;">&#128336;</div>
+              <div style="font-size:10px;color:#999;">History</div>
+            </div>
+          </div>
+
+        </div>
+      </foreignObject>
+
+      <!-- Screen glare -->
+      <rect x="16" y="12" width="361" height="828" rx="10" fill="white" opacity="0.04"/>
+      <!-- Dynamic Island -->
+      <rect x="142" y="20" width="109" height="32" rx="16" fill="#0a0a0a"/>
+    </svg>
+
+    <!-- Floating cards -->
+    <div class="float-card float-card-1">
+      <div class="float-label">Transfer Sent ✓</div>
+      <div class="float-value">QAR 1,450</div>
+      <div class="float-label" style="margin-top:4px;">to Nigeria in 90s</div>
+    </div>
+    <div class="float-card float-card-2">
+      <div class="float-label">Today's Rate</div>
+      <div class="float-value">1 QAR = 373 NGN</div>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section-alt" id="how">
+  <div style="text-align:center; margin-bottom: 0;">
+    <div class="section-label" style="justify-content:center;">Simple Process</div>
+    <div class="section-title" style="text-align:center;">Send money in 4 easy steps</div>
+    <p class="section-sub" style="margin: 0 auto; text-align:center;">No paperwork. No long queues. No confusion. Just open the app and go.</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card" data-num="1">
+      <div class="step-icon">📲</div>
+      <div class="step-title">Download & Sign Up</div>
+      <div class="step-desc">Get the AfriSend app from App Store or Play Store. Sign up with your ID and Qatar residency details in under 3 minutes.</div>
+    </div>
+    <div class="step-card" data-num="2">
+      <div class="step-icon">💳</div>
+      <div class="step-title">Add Your Payment</div>
+      <div class="step-desc">Link your QNB, CBQ, or any Qatar bank account. Alternatively top-up using your debit card.</div>
+    </div>
+    <div class="step-card" data-num="3">
+      <div class="step-icon">🌍</div>
+      <div class="step-title">Choose Recipient</div>
+      <div class="step-desc">Select a saved contact or add a new recipient in any of our 30+ supported African countries and delivery methods.</div>
+    </div>
+    <div class="step-card" data-num="4">
+      <div class="step-icon">⚡</div>
+      <div class="step-title">Money Arrives Fast</div>
+      <div class="step-desc">Your family receives funds in minutes — to mobile money, bank account, or cash pickup. Track every step in real-time.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section features-section" id="features">
+  <div class="features-layout">
+    <div>
+      <div class="section-labela">Why AfriSend</div>
+      <div class="section-titlea">Built for<br>Africans in Qatar</div>
+      <p class="section-suba">We understand the struggle of sending money home — high fees, bad rates, and slow transfers. AfriSend was built to fix all of that.</p>
+      <a href="#download" class="btn-primary" style="display:inline-block; margin-top:36px;">Start Sending Today</a>
+    </div>
+   <div class="features-grid">
+
+  <div class="feat-carda">
+    <div class="feat-icon">💰</div>
+    <div class="feat-titlea">Low Fees</div>
+    <div class="feat-desca">Starting from just 0.5% — among the lowest rates for Qatar-to-Africa transfers.</div>
+  </div>
+
+  <div class="feat-carda">
+    <div class="feat-icon">⚡</div>
+    <div class="feat-titlea">Lightning Fast</div>
+    <div class="feat-desca">Most transfers arrive in under 2 minutes. No more waiting 3–5 business days.</div>
+  </div>
+
+  <div class="feat-carda">
+    <div class="feat-icon">🔒</div>
+    <div class="feat-titlea">Bank-Level Security</div>
+    <div class="feat-desca">256-bit encryption, 2FA, and full compliance with Qatar Central Bank regulations.</div>
+  </div>
+
+  <div class="feat-carda">
+    <div class="feat-icon">📱</div>
+    <div class="feat-titlea">Mobile Money</div>
+    <div class="feat-desca">Direct delivery to M-Pesa, MTN MoMo, Airtel Money, Wave, and 20+ more wallets.</div>
+  </div>
+
+  <div class="feat-carda">
+    <div class="feat-icon">📊</div>
+    <div class="feat-titlea">Live Exchange Rates</div>
+    <div class="feat-desca">Real-time competitive rates updated every minute. No hidden markups or surprises.</div>
+  </div>
+
+  <div class="feat-carda">
+    <div class="feat-icon">🤝</div>
+    <div class="feat-titlea">24/7 Support</div>
+    <div class="feat-desca">Arabic, English, French, and Swahili support via chat, call, or WhatsApp anytime.</div>
+  </div>
+
+</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RATES -->
+<!--  <section class="section section-alt" id="rates">
+  <div style="text-align:center;">
+    <div class="section-label" style="justify-content:center; display:flex;">Exchange Rates</div>
+    <div class="section-title" style="text-align:center;">Transparent. Competitive. Fair.</div>
+    <p class="section-sub" style="margin: 0 auto; text-align:center;">Live rates updated every minute. What you see is what your family gets.</p>
+  </div>
+ <div class="rates-table">
+    <div class="rates-head">
+      <div>Country</div>
+      <div>Rate (1 QAR)</div>
+      <div>Our Fee</div>
+      <div>Speed</div>
+    </div>
+    <div class="rates-row">
+      <div><span class="country-flag">🇬🇭</span><span class="country-name">Ghana</span></div>
+      <div class="rate-value">6.42 GHS</div>
+      <div class="rate-fee low">0.75% <span class="rate-badge">LOW</span></div>
+      <div class="rate-speed">⚡ Instant</div>
+    </div>
+    <div class="rates-row">
+      <div><span class="country-flag">🇳🇬</span><span class="country-name">Nigeria</span></div>
+      <div class="rate-value">478 NGN</div>
+      <div class="rate-fee low">0.85%</div>
+      <div class="rate-speed">⚡ Under 2 min</div>
+    </div>
+    <div class="rates-row">
+      <div><span class="country-flag">🇰🇪</span><span class="country-name">Kenya</span></div>
+      <div class="rate-value">35.2 KES</div>
+      <div class="rate-fee low">0.75% <span class="rate-badge">LOW</span></div>
+      <div class="rate-speed">⚡ Instant</div>
+    </div>
+    <div class="rates-row">
+      <div><span class="country-flag">🇨🇲</span><span class="country-name">Cameroon</span></div>
+      <div class="rate-value">166 XAF</div>
+      <div class="rate-fee low">1.0%</div>
+      <div class="rate-speed">🕐 Under 5 min</div>
+    </div>
+    <div class="rates-row">
+      <div><span class="country-flag">🇸🇳</span><span class="country-name">Senegal</span></div>
+      <div class="rate-value">166 XOF</div>
+      <div class="rate-fee low">1.0%</div>
+      <div class="rate-speed">⚡ Under 3 min</div>
+    </div>
+    <div class="rates-row">
+      <div><span class="country-flag">🇪🇹</span><span class="country-name">Ethiopia</span></div>
+      <div class="rate-value">31.8 ETB</div>
+      <div class="rate-fee low">0.9%</div>
+      <div class="rate-speed">🕐 Under 10 min</div>  
+    </div>
+  </div>
+</section> -->
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div style="text-align:center;">
+    <div class="section-label" style="justify-content:center; display:flex;">Community Love</div>
+    <div class="section-title" style="text-align:center;">Trusted by Africans<br>across Doha</div>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"I used to pay 4–5% to send money home. With AfriSend I pay less than 1% and my mum gets the money in minutes. This app changed everything for me."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">EO</div>
+        <div>
+          <div class="testi-name">Emmanuel Osei</div>
+          <div class="testi-origin">🇬🇭 Ghana · Construction Worker, Doha</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The live exchange rates are so transparent. I know exactly how much my family is receiving before I even confirm the transfer. No more nasty surprises."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">AN</div>
+        <div>
+          <div class="testi-name">Amara Ndiaye</div>
+          <div class="testi-origin">🇸🇳 Senegal · Restaurant Manager, Doha</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Sending to M-Pesa in Kenya used to be a headache. AfriSend made it as easy as sending a WhatsApp message. My kids get their school fees on time now."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">FM</div>
+        <div>
+          <div class="testi-name">Faith Muthoni</div>
+          <div class="testi-origin">🇰🇪 Kenya · Nurse, Qatar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section class="download-section" id="download">
+  <div class="download-bg"></div>
+  <div class="download-inner">
+    <div class="section-label">Download Now</div>
+    <div class="section-title">Your family is<br>one tap away</div>
+    <p class="section-sub">AfriSend is available on iOS and Android. Download now and make your first transfer — it takes less than 3 minutes to get started.</p>
+    <div class="store-buttons">
+      <a href="#" class="store-btn" id="appstore-btn">
+        <img src="app-store.svg" alt="Download on the App Store" style="height:40px;">
+      <!--  <div>
+          <div class="store-text-label">Download on the</div>
+          <div class="store-name">App Store</div>
+        </div> -->
+      </a>
+      <a href="#" class="store-btn" id="playstore-btn">
+        <img src="playstore.svg" alt="Get it on Google Play" style="height:40px;">
+     <!--   <div>
+          <div class="store-text-label">Get it on</div>
+          <div class="store-name">Google Play</div>
+        </div> -->
+      </a>
+    </div>
+ <!--   <p class="store-soon">📱 App launching soon — enter your number below to be notified first.</p> 
+    <div style="display:flex; gap:12px; justify-content:center; margin-top:20px; flex-wrap:wrap;">
+      <input type="tel" placeholder="+974 XXXX XXXX" style="padding:14px 20px; border-radius:50px; border:1.5px solid rgba(76,175,80,0.4); background:rgba(255,255,255,0.06); color:white; font-size:0.92rem; width:230px; outline:none; font-family:'DM Sans',sans-serif;">
+      <button style="padding:14px 28px; border-radius:50px; border:none; background:linear-gradient(135deg,#4caf50,#7ed321); color:#0d3b2e; font-weight:700; font-size:0.92rem; cursor:pointer; font-family:'DM Sans',sans-serif;">Notify Me</button>
+    </div> -->
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="logo.png" alt="AfriSend">
+        <span style="font-family:'DM Sans',sans-serif; font-weight:700; font-size:1.2rem;">Afri<span style="color:var(--lime)">send</span></span>
+      </div>
+      <p class="footer-tagline">Connecting Family Across Borders. The fastest, most affordable way to send money from Qatar to Africa.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">in</a>
+        <a href="#" class="social-link">f</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="#how">How It Works</a>
+      <a href="#features">Features</a>
+      <a href="#rates">Exchange Rates</a>
+      <a href="#download">Download App</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Careers</a>
+    <!--  <a href="#">Blog</a>
+      <a href="#">Press</a> -->
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a href="#">Help Center</a>
+      <a href="#">Contact Us</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 <span>AfriSend</span>. All rights reserved. Licensed by Qatar Central Bank.</div>
+    <div>🇶🇦 Made with ❤️ in Doha, Qatar for <span>Africa</span></div>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  function closeMenu() {
+    navToggle.classList.remove('open');
+    navLinks.classList.remove('open');
+  }
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+</script>
+</body>
+</html>
