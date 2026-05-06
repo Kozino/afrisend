@@ -338,23 +338,58 @@ nav {
   .download-inner .section-label { justify-content: center; display: flex; }
   .download-inner .section-title { margin-bottom: 16px; }
   .download-inner .section-sub { margin: 0 auto 48px; text-align: center; }
-  .store-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-  .store-btn {
-    display: flex; align-items: center; gap: 14px;
-    background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.2);
-    border-radius: 16px; padding: 14px 28px;
-    text-decoration: none; color: var(--white);
-    transition: background 0.25s, border-color 0.25s, transform 0.25s;
-    min-width: 200px;
-  }
-  .store-btn:hover { background: rgba(76,175,80,0.2); border-color: var(--lime); transform: translateY(-3px); color: var(--white); }
-  .store-icon { font-size: 2rem; }
-  .store-text-label { font-size: 0.68rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.06em; }
-  .store-name { font-size: 1.1rem; font-weight: 700; }
-  .store-soon {
-    margin-top: 20px; font-size: 0.82rem;
-    color: rgba(255,255,255,0.4);
-  }
+ .store-buttons { 
+  display: flex; 
+  gap: 20px; 
+  justify-content: center; 
+  flex-wrap: wrap; 
+}
+
+.store-btn {
+  display: flex; 
+  align-items: center; 
+  gap: 14px;
+  background: rgba(255,255,255,0.08); 
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 16px; 
+  padding: 14px 28px;
+  text-decoration: none; 
+  color: var(--white);
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
+  min-width: 200px;
+}
+
+.store-btn:hover { 
+  background: rgba(76,175,80,0.2); 
+  border-color: var(--lime); 
+  transform: translateY(-3px); 
+  color: var(--white); 
+}
+
+/* Optional: style the image directly */
+.store-btn img {
+  height: 40px;
+  width: auto;
+  display: block;  /* removes extra spacing */
+}
+
+.store-text-label { 
+  font-size: 0.68rem; 
+  color: rgba(255,255,255,0.6); 
+  text-transform: uppercase; 
+  letter-spacing: 0.06em; 
+}
+
+.store-name { 
+  font-size: 1.1rem; 
+  font-weight: 700; 
+}
+
+.store-soon {
+  margin-top: 20px; 
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.4);
+}
 
   /* ─── FOOTER ─── */
   footer {
@@ -942,23 +977,33 @@ nav {
     <div class="section-label">Download Now</div>
     <div class="section-title">Your family is<br>one tap away</div>
     <p class="section-sub">AfriSend is available on iOS and Android. Download now and make your first transfer — it takes less than 3 minutes to get started.</p>
-   <div class="store-buttons"> 
-     <a href="#" class="store-btn" id="appstore-btn" style="text-decoration: none;">
-    <img src="app-store.svg" alt="Download on the App Store" style="height:40px; display: block;">
-</a>
+   <div class="store-buttons">
+  <a href="#" class="store-btn" id="appstore-btn">
+    <img src="app-store.svg" alt="Download on the App Store">
+    <div class="store-text">
+      <div class="store-text-label">Download on the</div>
+      <div class="store-name">App Store</div>
+    </div>
+  </a>
+  
       <!--  <div>
           <div class="store-text-label">Download on the</div>
           <div class="store-name">App Store</div>
         </div> -->
       </a>
-      <a href="#" class="store-btn" id="playstore-btn">
-        <img src="playstore.svg" alt="Get it on Google Play" style="height:40px;">
+      <a href="#" class="store-btn" id="googleplay-btn">
+    <img src="playstore.png" alt="Get it on Google Play">
+    <div class="store-text">
+      <div class="store-text-label">Get it on</div>
+      <div class="store-name">Google Play</div>
+    </div>
+  </a>
+</div>
      <!--   <div>
           <div class="store-text-label">Get it on</div>
           <div class="store-name">Google Play</div>
         </div> -->
-      </a>
-    </div>
+ 
  <!--   <p class="store-soon">📱 App launching soon — enter your number below to be notified first.</p> 
     <div style="display:flex; gap:12px; justify-content:center; margin-top:20px; flex-wrap:wrap;">
       <input type="tel" placeholder="+974 XXXX XXXX" style="padding:14px 20px; border-radius:50px; border:1.5px solid rgba(76,175,80,0.4); background:rgba(255,255,255,0.06); color:white; font-size:0.92rem; width:230px; outline:none; font-family:'DM Sans',sans-serif;">
